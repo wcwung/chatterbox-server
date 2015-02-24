@@ -62,25 +62,25 @@ app.fetch = function(room){
       contentType: 'application/json',
       success:
       function (data) {
-        for (var i = data.results.length-1; i >= data.results.length - 2 ; i--){
-          if (!_.contains(rooms, data.results[i].roomname)){
-            rooms.push(data.results[i].roomname);
+        for (var i = data.length-1; i >= 0 ; i--){
+          if (!_.contains(rooms, data[i].roomname)){
+            rooms.push(data[i].roomname);
             // console.log(rooms);
             $("#roomList").empty();
             for (var j = 0; j < rooms.length; j++){
                 $("#roomList").append("<option value=" + rooms[j] + ">" + rooms[j] + "</option>");
             }
           }
-          if (data.results[i].roomname === room || room === undefined) {
-            if (!_.contains( messageIds, data.results[i].objectId )){
-              var msg = _.escape(data.results[i].text);
-              var user = _.escape(data.results[i].username);
+          if (data[i].roomname === room || room === undefined) {
+            if (!_.contains( messageIds, data[i].objectId )){
+              var msg = _.escape(data[i].text);
+              var user = _.escape(data[i].username);
               if (_.contains(friends, user)) {
                 $(".messages").prepend("<li>" + "<span class='user friend'>" + user + "</span>" + "<span class='message'>" + msg + "</span>" + "</li>");
               } else {
                 $(".messages").prepend("<li>" + "<span class='user'>" + user + "</span>" + "<span class='message'>" + msg + "</span>" + "</li>");
               }
-              messageIds.push(data.results[i].objectId);
+              messageIds.push(data[i].objectId);
 
             }
           }

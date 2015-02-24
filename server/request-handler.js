@@ -11,7 +11,24 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
-
+var results = [
+  {
+   createdAt: "2015-02-24",
+   objectId: "34k4okapokd",
+   roomname: "everywhere",
+   text: "this is nigel saying hello",
+   updatedAt: "2015-02-24",
+   username: "nigel"
+  },
+  {
+   createdAt: "2015-02-01",
+   objectId: "jijiejgr",
+   roomname: "everywhere",
+   text: "this is megaman saying hello",
+   updatedAt: "2015-02-01",
+   username: "megaman"
+  }
+];
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
   //
@@ -61,21 +78,21 @@ var requestHandler = function(request, response) {
   if (request.method === 'OPTIONS'){
       if(request.headers['access-control-request-method'] === "GET"){
         console.log("This is an options request, get style");
-        response.end("World!");
-        // headers["Access-Control-Allow-Origin"] = "*";
-        // headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
-        // headers["Access-Control-Allow-Credentials"] = false;
-        // headers["Access-Control-Max-Age"] = '86400'; // 24 hours
-        // headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept";
-        // response.writeHead(200, headers);
+        response.writeHead(200, headers);
+        response.write(JSON.stringify(results));
+        response.end();
       } else if(request.headers['access-control-request-method'] === "POST"){
         console.log("Options post request.")
+        response.writeHead(200, headers);
+        response.end();
       } else {
         console.log("Still working on it");
       }
   } else if (request.method === "GET") {
     console.log("A straight up get request");
-    response.end("World!");
+    response.writeHead(200, headers);
+    response.write(JSON.stringify(results));
+    response.end();
   } else {
     console.log("Maybe this is a post request.");
   }
@@ -110,5 +127,5 @@ var defaultCorsHeaders = {
 
 console.log("hi");
 // Exports
-exports.requestHandler = requestHandler;
-exports.defaultCorsHeaders = defaultCorsHeaders;
+module.exports = requestHandler;
+
