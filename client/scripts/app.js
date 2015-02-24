@@ -1,23 +1,5 @@
 $(function(){
-// YOUR CODE HERE:
-// var message = "This is a test. Of REST. The best."
 
-// var postMessages = function() {
-//   $.ajax({
-//     // always use this url
-//     url: 'https://api.parse.com/1/classes/chatterbox',
-//     type: 'POST',
-//     data: JSON.stringify(message),
-//     contentType: 'application/json',
-//     success: function (data) {
-//       console.log('chatterbox: Message sent');
-//     },
-//     error: function (data) {
-//       // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
-//       console.error('chatterbox: Failed to send message');
-//     }
-//   });
-// };
 var currentRoom = "";
 var app = {};
 var friends = [];
@@ -28,8 +10,6 @@ app.send = function(message){
     text : message,
     roomname : currentRoom
   };
-
-  console.log("I'm about to make an ajax request.");
 
   $.ajax({
     // always use this url
@@ -81,11 +61,9 @@ app.fetch = function(room){
                 $(".messages").prepend("<li>" + "<span class='user'>" + user + "</span>" + "<span class='message'>" + msg + "</span>" + "</li>");
               }
               messageIds.push(data[i].objectId);
-
             }
           }
         }
-        console.log(data);
       },
       error: function (data) {
         // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
