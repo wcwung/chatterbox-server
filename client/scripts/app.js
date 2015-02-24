@@ -28,9 +28,12 @@ app.send = function(message){
     text : message,
     roomname : currentRoom
   };
+
+  console.log("I'm about to make an ajax request.");
+
   $.ajax({
     // always use this url
-    url: 'https://api.parse.com/1/classes/chatterbox',
+    url: 'http://127.0.0.1:3000',
     type: 'POST',
     data: JSON.stringify(dataMessage),
     contentType: 'application/json',
@@ -43,6 +46,7 @@ app.send = function(message){
     }
   });
 };
+
 app.fetch = function(room){
 
   var messageIds = [];
@@ -53,11 +57,12 @@ app.fetch = function(room){
   setInterval(function(){
     $.ajax({
         // always use this url
-      url: 'https://api.parse.com/1/classes/chatterbox?order=-createdAt',
+      url: 'http://127.0.0.1:3000',
       type: 'GET',
       contentType: 'application/json',
-      success: function (data) {
-        for (var i = data.results.length-1; i >= 0; i--){
+      success:
+      function (data) {
+        for (var i = data.results.length-1; i >= data.results.length - 2 ; i--){
           if (!_.contains(rooms, data.results[i].roomname)){
             rooms.push(data.results[i].roomname);
             // console.log(rooms);
@@ -80,13 +85,14 @@ app.fetch = function(room){
             }
           }
         }
+        console.log(data);
       },
       error: function (data) {
         // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
         console.error('chatterbox: Failed to get messages.');
       }
     });
-  }, 500);
+  }, 5000);
 };
 
 app.fetch();
@@ -110,6 +116,7 @@ $('.messages').on("click", ".user", function() {
 $('.submit-btn').on('click', function() {
   app.send($(".submission-input").val());
   $('.submission-input').val('');
+
 });
 
 $('.all-rooms').on('click', function() {

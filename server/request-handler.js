@@ -27,6 +27,8 @@ var requestHandler = function(request, response) {
   // Adding more logging to your server can be an easy way to get passive
   // debugging help, but you should always be careful about leaving stray
   // console.logs in your code.
+
+
   console.log("Serving request type " + request.method + " for url " + request.url);
 
   // The outgoing status.
@@ -39,7 +41,7 @@ var requestHandler = function(request, response) {
   //
   // You will need to change this if you are sending something
   // other than plain text, like JSON or HTML.
-  headers['Content-Type'] = "text/plain";
+  headers['Content-Type'] = "application/json";
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
@@ -52,7 +54,31 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  response.end("Hello, World!");
+  // console.log(request.headers['access-control-request-headers']);
+
+  // console.log(request)
+
+  if (request.method === 'OPTIONS'){
+      if(request.headers['access-control-request-method'] === "GET"){
+        console.log("This is an options request, get style");
+        response.end("World!");
+        // headers["Access-Control-Allow-Origin"] = "*";
+        // headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
+        // headers["Access-Control-Allow-Credentials"] = false;
+        // headers["Access-Control-Max-Age"] = '86400'; // 24 hours
+        // headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept";
+        // response.writeHead(200, headers);
+      } else if(request.headers['access-control-request-method'] === "POST"){
+        console.log("Options post request.")
+      } else {
+        console.log("Still working on it");
+      }
+  } else if (request.method === "GET") {
+    console.log("A straight up get request");
+    response.end("World!");
+  } else {
+    console.log("Maybe this is a post request.");
+  }
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
@@ -70,6 +96,19 @@ var defaultCorsHeaders = {
   "access-control-allow-headers": "content-type, accept",
   "access-control-max-age": 10 // Seconds.
 };
+// GET
 
+// var getTest = function() {
+//   http.get("http://127.0.0.1:3000/", function(res) {
+//     console.log("Got response");
+//   }).on('error', function(e) {
+//     console.log("Got error: " + e.message);
+//   });
+// }
+
+// POST
+
+console.log("hi");
+// Exports
 exports.requestHandler = requestHandler;
 exports.defaultCorsHeaders = defaultCorsHeaders;
