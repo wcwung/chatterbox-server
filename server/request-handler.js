@@ -30,14 +30,23 @@ var requestHandler = function(request, response) {
   }
 
   var requestIdentifier = function(request, response){
+    var body = '';
     if (request.method === 'OPTIONS'){
       optionsResponse(request);
     } else if (request.method === "GET") {
       generalResponse();
     } else if (request.method === "POST") {
       console.log('its a post request')
-      console.log(response);
-      dataMachine(request.data);
+      // console.log(response);
+      request.on('data', function(data){
+        body += data;
+      })
+      request.on('end', function(){
+        // console.log('body within request.on("end") ', body);
+        // console.log('within request.on("end") ', response.data)
+        dataMachine(JSON.parse(body));
+      })
+      // dataMachine(request);
     } else {
       console.log("what is happening?");
     }

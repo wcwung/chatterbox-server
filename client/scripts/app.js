@@ -45,10 +45,9 @@ app.fetch = function(room){
         for (var i = data.length-1; i >= 0 ; i--){
           if (!_.contains(rooms, data[i].roomname)){
             rooms.push(data[i].roomname);
-            // console.log(rooms);
             $("#roomList").empty();
             for (var j = 0; j < rooms.length; j++){
-                $("#roomList").append("<option value=" + rooms[j] + ">" + rooms[j] + "</option>");
+              $("#roomList").append("<option value=" + rooms[j] + ">" + rooms[j] + "</option>");
             }
           }
           if (data[i].roomname === room || room === undefined) {
@@ -86,8 +85,7 @@ $('.messages').on("click", ".user", function() {
     // Traverse Dom and add class
     app.fetch();
   }
-  console.log(friends);
-  console.log(friends[0]);
+
 });
 
 // POST
@@ -111,20 +109,6 @@ $('#roomList').change(function(){
   currentRoom = $(this).val();
   app.fetch($(this).val());
 });
-
-// Add/Remove friends
-// $('.messages').find("li").on('click', function() {
-//   console.log("testing");
-//   // if (_.contains(app.friends, $(this).val())){
-//   //   // if friend is already in array, remove friend
-//   //   app.friends = _.without(app.friends, $(this).val());
-
-//   // } else {
-//   //   // else add friend
-//   //   app.friends.push($(this).val());
-//   // }
-// });
-
 
 // Fin.
 });
