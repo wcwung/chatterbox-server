@@ -42,6 +42,7 @@ app.fetch = function(room){
       contentType: 'application/json',
       success:
       function (data) {
+        var data = data.results;
         for (var i = data.length-1; i >= 0 ; i--){
           if (!_.contains(rooms, data[i].roomname)){
             rooms.push(data[i].roomname);
@@ -69,7 +70,7 @@ app.fetch = function(room){
         console.error('chatterbox: Failed to get messages.');
       }
     });
-  }, 5000);
+  }, 500);
 };
 
 app.fetch();

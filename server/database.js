@@ -1,4 +1,5 @@
-var database = [
+var database = {
+  results: []
   // {
   //  createdAt: "2015-02-24",
   //  objectId: "34k4okapokd",
@@ -15,7 +16,7 @@ var database = [
   //  updatedAt: "2015-02-01",
   //  username: "megaman"
   // }
-];
+};
 
 
 module.exports = database;

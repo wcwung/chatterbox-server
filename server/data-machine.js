@@ -11,7 +11,7 @@ var dataMachine = function(data) {
   data.text = data.text || "";
   // data.updatedAt = data.updatedAt || new Date.toISOString();
   data.username = data.username || "David";
-  database.push(data);
+  database.results.push(data);
 }
 
 module.exports = dataMachine;
